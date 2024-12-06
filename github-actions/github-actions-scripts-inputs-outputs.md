@@ -5,13 +5,13 @@ name: Script and I/O Example
 
 on:
   workflow_dispatch: # Allows manual triggering of the workflow
-    inputs:
-      issue_title:
+    inputs: # Define inputs for the workflow
+      issue_title: # Input for the title of the GitHub issue
         description: 'Title of the GitHub issue to create'
-        required: true
-      issue_body:
+        required: true # Marked as required; user must provide this value
+      issue_body: # Input for the body of the GitHub issue
         description: 'Body of the GitHub issue'
-        required: false
+        required: false # Optional; if not provided, a default value will be used
 
 jobs:
   run-scripts:
@@ -41,8 +41,8 @@ jobs:
             const issue = await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: inputs.issue_title, // Takes input value for the issue title
-              body: inputs.issue_body || 'Default issue body' // Default value if input not provided
+              title: inputs.issue_title, // Input value for the issue title
+              body: inputs.issue_body || 'Default issue body' // Input value for the issue body or a default
             });
             // Return issue URL as output
             return { result: issue.data.html_url };
@@ -51,6 +51,8 @@ jobs:
       - name: Log Issue URL
         run: echo "Issue created: ${{ steps.create_issue.outputs.result }}"
 ```
+
+<img width="847" alt="image" src="https://github.com/user-attachments/assets/547e15eb-aade-44b5-a507-7a668d39a5c7">
 
 <img width="805" alt="image" src="https://github.com/user-attachments/assets/be58b279-ea23-48d2-aeab-8927d12d1e29">
 
